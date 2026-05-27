@@ -66,16 +66,16 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to marshal PKIX public key: %v", err)
 	}
-	fmt.Println("=== PKIX (BEGIN PUBLIC KEY) ===")
+	fmt.Printf("=== PKIX ===\n\n")
 	fmt.Print(string(pkixPEM))
 
 	pkcs1PEM, err := encodePKCS1(cert.PublicKey)
 	switch {
 	case err == nil:
-		fmt.Println("=== PKCS#1 (BEGIN RSA PUBLIC KEY) ===")
+		fmt.Printf("\n=== PKCS#1 ===\n\n")
 		fmt.Print(string(pkcs1PEM))
 	case errors.Is(err, ErrPKCS1NotSupported):
-		fmt.Println("=== PKCS#1 ===")
+		fmt.Printf("\n=== PKCS#1 ===\n\n")
 		if _, isECDSA := cert.PublicKey.(*ecdsa.PublicKey); isECDSA {
 			fmt.Println("Not available — ECDSA keys have no PKCS#1 format")
 		} else {
