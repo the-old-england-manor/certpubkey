@@ -47,7 +47,12 @@ func encodePKCS1(pub any) ([]byte, error) {
 }
 
 func main() {
-	pemData, err := os.ReadFile("cert.pem")
+	if len(os.Args) < 2 {
+		fmt.Fprintln(os.Stderr, "usage: certpubkey <path-to-cert.pem>")
+		os.Exit(2)
+	}
+
+	pemData, err := os.ReadFile(os.Args[1])
 	if err != nil {
 		log.Fatalf("Failed to read file: %v", err)
 	}

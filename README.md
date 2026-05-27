@@ -9,6 +9,12 @@ Given a PEM-encoded certificate, it outputs:
 - `BEGIN PUBLIC KEY` — PKIX / SubjectPublicKeyInfo format (works for RSA and ECDSA)
 - `BEGIN RSA PUBLIC KEY` — PKCS#1 format (RSA only)
 
+## Why this exists
+
+Some TLS certificate vendors ship only the certificate and the private key — not the public key as a standalone file. If you have a device that wants the public key uploaded separately in PKIX or PKCS#1 PEM format (network switches sometimes do), there's no straight-from-vendor file for it, and extracting it by hand means chaining `openssl` commands on every cert rotation.
+
+That's the gap that prompted this tool. Point `certpubkey` at the cert from the vendor, get back the public key in the format the device expects.
+
 ## Background
 
 SSL certificates embed a public key inside a larger X.509 structure containing metadata (subject, issuer, validity, signature, etc). This tool strips all of that away and gives you just the raw public key in the format you need.
@@ -22,10 +28,17 @@ See [PKCS#1 vs PKIX](#pkcs1-vs-pkix) below for a quick explanation of the two fo
 ## Usage
 
 ```bash
-go run main.go
+go run . <path-to-cert.pem>
 ```
 
-By default it reads from `cert.pem` in the current directory. You can adjust the filename in `main.go`.
+Or build once and reuse:
+
+```bash
+go build -o certpubkey
+./certpubkey /path/to/cert.pem
+```
+
+The path to the PEM-encoded certificate is the first (and only) positional argument. The tool exits with a usage message if no path is given.
 
 **Example output:**
 
@@ -54,15 +67,6 @@ MIIBCgKCAQEAxJRn...
 | Used in                 | Legacy / older systems | TLS certificates, modern standards |
 
 PKCS#1 contains just the raw RSA modulus and exponent. PKIX wraps the key in a `SubjectPublicKeyInfo` structure that also identifies the algorithm, making it format-agnostic.
-
-## Writing to files
-
-To write the keys to disk instead of stdout, uncomment these lines in `main.go`:
-
-```go
-// os.WriteFile("key_pkix.pem", pkixPEM, 0644)
-// os.WriteFile("key_pkcs1.pem", pkcs1PEM, 0644)
-```
 
 ## License
 
