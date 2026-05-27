@@ -51,12 +51,14 @@ The path to the PEM-encoded certificate is the first (and only) positional argum
 **Example output:**
 
 ```
-=== PKIX (BEGIN PUBLIC KEY) ===
+=== PKIX ===
+
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxJRn...
 -----END PUBLIC KEY-----
 
-=== PKCS#1 (BEGIN RSA PUBLIC KEY) ===
+=== PKCS#1 ===
+
 -----BEGIN RSA PUBLIC KEY-----
 MIIBCgKCAQEAxJRn...
 -----END RSA PUBLIC KEY-----
