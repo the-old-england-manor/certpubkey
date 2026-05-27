@@ -35,20 +35,28 @@ build: bin ## Build the application for the native architecture
 	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-${GOOS}-${GOARCH}-${VERSION} main.go
 
 .PHONY: build-amd64-linux
+build-amd64-linux: GOOS   := linux
+build-amd64-linux: GOARCH := amd64
 build-amd64-linux: bin ## Build the application for linux-amd64 architecture
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-linux-amd64-${VERSION} main.go
+	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-${GOOS}-${GOARCH}-${VERSION} main.go
 
 .PHONY: build-amd64-windows
+build-amd64-windows: GOOS   := windows
+build-amd64-windows: GOARCH := amd64
 build-amd64-windows: bin ## Build the application for windows-amd64 architecture
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-windows-amd64-${VERSION}.exe main.go
+	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-${GOOS}-${GOARCH}-${VERSION}.exe main.go
 
 .PHONY: build-amd64-darwin
+build-amd64-darwin: GOOS   := darwin
+build-amd64-darwin: GOARCH := amd64
 build-amd64-darwin: bin ## Build the application for darwin-amd64 architecture
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-darwin-amd64-${VERSION} main.go
+	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-${GOOS}-${GOARCH}-${VERSION} main.go
 
 .PHONY: build-arm64-darwin
+build-arm64-darwin: GOOS   := darwin
+build-arm64-darwin: GOARCH := arm64
 build-arm64-darwin: bin ## Build the application for darwin-arm64 architecture
-	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-darwin-arm64-${VERSION} main.go
+	CGO_ENABLED=0 GOOS=${GOOS} GOARCH=${GOARCH} go build -trimpath -v -ldflags="-s -w" -o bin/${NAME}-${GOOS}-${GOARCH}-${VERSION} main.go
 
 .PHONY: build-all
 build-all: build-amd64-linux build-amd64-windows build-amd64-darwin build-arm64-darwin ## Build the application for all architectures
