@@ -23,7 +23,15 @@ See [PKCS#1 vs PKIX](#pkcs1-vs-pkix) below for a quick explanation of the two fo
 
 ## Requirements
 
-- Go 1.18+
+- Go 1.21+
+
+## Install
+
+```bash
+go install github.com/the-old-england-manor/certpubkey@latest
+```
+
+Replace `@latest` with a version tag (e.g. `@v0.1.0`) to pin to a specific release.
 
 ## Usage
 
